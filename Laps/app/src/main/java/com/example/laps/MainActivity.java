@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        laps1=findViewById(R.id.laps1);
-        laps2=findViewById(R.id.laps2);
+        laps1 = findViewById(R.id.laps1);
+        laps2 = findViewById(R.id.laps2);
         laps1.setText("0");
         laps2.setText("0");
         p1 = findViewById(R.id.p1);
@@ -45,24 +45,21 @@ public class MainActivity extends AppCompatActivity {
         playerOneDice.setOnTouchListener(new View.OnTouchListener() {
             Handler mHandler = new Handler();
             int i;
-
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        mAction.run();
-                        i = 1;
+                        i=1;
                         p1.setText(String.valueOf(i));
+                        mHandler.postDelayed(mAction,100);
                         break;
                     case MotionEvent.ACTION_UP:
                         mHandler.removeCallbacks(mAction);
                         step = Integer.parseInt(p1.getText().toString());
                         calcPosition();
-                        checkForWin();
-                        if(playerOnePosition!=15)
+                        if(step!=0)
                             makemove();
-                        else
-                            textViews[playerOnePrev].setText("");
+                        checkForWin();
                         laps1.setText(String.valueOf(playerOneLaps));
                         playerOneTurn = false;
                         playerOneDice.setVisibility(View.INVISIBLE);
@@ -75,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
             Runnable mAction = new Runnable() {
                 @Override
                 public void run() {
-                    p1.setText(String.valueOf(i));
                     i = (i % 6) + 1;
-                    mHandler.postDelayed(this, 50);
+                    p1.setText(String.valueOf(i));
+                    mHandler.postDelayed(this, 100);
                 }
             };
         });
@@ -91,23 +88,22 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        j = 1;
+                        j=1;
                         p2.setText(String.valueOf(j));
-                        mAction2.run();
+                        mHandler2.postDelayed(mAction2,100);
                         break;
                     case MotionEvent.ACTION_UP:
                         mHandler2.removeCallbacks(mAction2);
                         step = Integer.parseInt(p2.getText().toString());
                         calcPosition();
-                        checkForWin();
-                        if(playerTwoPosition!=0)
+                        if(step!=0)
                             makemove();
-                        else
-                            textViews[playerTwoPrev].setText("");
+                        checkForWin();
                         laps2.setText(String.valueOf(playerTwoLaps));
                         playerOneTurn = true;
                         playerOneDice.setVisibility(View.VISIBLE);
                         playerTwoDice.setVisibility(View.INVISIBLE);
+                        j=1;
                         break;
                 }
                 return false;
@@ -116,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
             Runnable mAction2 = new Runnable() {
                 @Override
                 public void run() {
-                    p2.setText(String.valueOf(j));
                     j = (j % 6) + 1;
-                    mHandler2.postDelayed(this, 50);
+                    p2.setText(String.valueOf(j));
+                    mHandler2.postDelayed(this, 100);
                 }
             };
         });
@@ -136,8 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "IGNORED!!", Toast.LENGTH_SHORT).show();
                 step = 0;
             }
-        }
-        else {
+        } else {
             if ((playerTwoPosition + step) > 15) {
                 Toast.makeText(getApplicationContext(), "IGNORED!!", Toast.LENGTH_SHORT).show();
                 step = 0;
@@ -150,65 +145,54 @@ public class MainActivity extends AppCompatActivity {
         else
             playerTwoPosition = playerTwoPosition + step;
 
-
-        if (playerOnePosition == 0 && playerOneTurn) {
-            Toast.makeText(getApplicationContext(), "LAP COMPLETED", Toast.LENGTH_SHORT).show();
-            playerOneLaps++;
-            playerOnePosition = 15;
-        } else if (playerTwoPosition == 15 && !playerOneTurn) {
-            Toast.makeText(getApplicationContext(), "LAP COMPLETED", Toast.LENGTH_SHORT).show();
-            playerTwoLaps++;
-            playerTwoPosition = 0;
-        }
-
     }
 
     void makemove() {
-        if (playerOnePosition != playerTwoPosition) {
-            if (playerOneTurn) {
-                while (playerOnePrev != playerOnePosition) {
-                    if (playerOnePrev != 15 && !((textViews[playerOnePrev].getText().toString()).equals("O")))
-                        textViews[playerOnePrev].setText("");
-                    playerOnePrev--;
-                    if (!((textViews[playerOnePrev].getText().toString()).equals("O")))
-                        textViews[playerOnePrev].setText("X");
-                }
-            } else {
-                while (playerTwoPrev != playerTwoPosition) {
-                    if (playerTwoPrev != 0 && !((textViews[playerTwoPrev].getText().toString()).equals("X")))
-                        textViews[playerTwoPrev].setText("");
-                    playerTwoPrev++;
-                    if (!((textViews[playerTwoPrev].getText().toString()).equals("X")))
-                        textViews[playerTwoPrev].setText("O");
-                }
-            }
-        }
-        else{
-            if(playerOneTurn){
-                if(playerOnePrev!=15)
+        if (playerOneTurn) {
+            if (playerOnePosition != 0) {
+                if (playerOnePrev != 15)
                     textViews[playerOnePrev].setText("");
+                if (playerOnePosition == playerTwoPosition) {
+                    Toast.makeText(getApplicationContext(), "YOU JUST GOT REKT!!", Toast.LENGTH_SHORT).show();
+                    playerTwoPosition = 0;
+                }
                 textViews[playerOnePosition].setText("X");
-                playerTwoPosition=0;
+            } else {
+                textViews[playerOnePrev].setText("");
+                Toast.makeText(getApplicationContext(), "LAP COMPLETED", Toast.LENGTH_SHORT).show();
+                playerOneLaps++;
+                playerOnePosition = 15;
             }
-            else{
-                if (playerTwoPrev!=0)
+        } else {
+            if (playerTwoPosition != 15) {
+                if (playerTwoPrev != 0)
                     textViews[playerTwoPrev].setText("");
+                if (playerTwoPosition == playerOnePosition) {
+                    Toast.makeText(getApplicationContext(), "YOU JUST GOT REKT!!", Toast.LENGTH_SHORT).show();
+                    playerOnePosition = 15;
+                }
                 textViews[playerTwoPosition].setText("O");
-                playerOnePosition=15;
+            } else {
+                textViews[playerTwoPrev].setText("");
+                Toast.makeText(getApplicationContext(), "LAP COMPLETED", Toast.LENGTH_SHORT).show();
+                playerTwoLaps++;
+                playerTwoPosition = 0;
+
             }
+
 
         }
     }
 
-    void checkForWin(){
+    void checkForWin() {
         Intent i;
-        if(playerOneLaps==3) {
-            i=new Intent(getApplicationContext(),SecondActivity.class);
+        if (playerOneLaps == 3) {
+            i = new Intent(getApplicationContext(), SecondActivity.class);
             startActivity(i);
             finish();
         } else {
-            if (playerTwoLaps==3) {
-                i=new Intent(getApplicationContext(),ThirdActivity.class);
+            if (playerTwoLaps == 3) {
+                i = new Intent(getApplicationContext(), ThirdActivity.class);
                 startActivity(i);
                 finish();
             }
