@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     int playerOnePosition, playerTwoPosition, step, playerOneLaps = 0, playerTwoLaps = 0;
     int playerOnePrev, playerTwoPrev;
-    boolean playerOneTurn = true;
+    boolean playerOneTurn = true, playerOneFirstTime = true, playerTwoFirstTime = true;
     TextView[] textViews = new TextView[15];
     Button playerOneDice, playerTwoDice;
     TextView p1, p2, laps1, laps2;
@@ -45,28 +45,42 @@ public class MainActivity extends AppCompatActivity {
         playerOneDice.setOnTouchListener(new View.OnTouchListener() {
             Handler mHandler = new Handler();
             int i;
+
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        i=1;
+                        i = 1;
                         p1.setText(String.valueOf(i));
-                        mHandler.postDelayed(mAction,100);
+                        mHandler.postDelayed(mAction, 100);
                         break;
                     case MotionEvent.ACTION_UP:
                         mHandler.removeCallbacks(mAction);
                         step = Integer.parseInt(p1.getText().toString());
-                        calcPosition();
-                        if(step!=0)
-                            makemove();
-                        checkForWin();
-                        laps1.setText(String.valueOf(playerOneLaps));
-                        playerOneTurn = false;
-                        playerOneDice.setVisibility(View.INVISIBLE);
-                        playerTwoDice.setVisibility(View.VISIBLE);
+                        if (!playerOneFirstTime) {
+                            calcPosition();
+                            if (step != 0)
+                                makemove();
+                            checkForWin();
+                            laps1.setText(String.valueOf(playerOneLaps));
+                            playerOneTurn = false;
+                            playerOneDice.setVisibility(View.INVISIBLE);
+                            playerTwoDice.setVisibility(View.VISIBLE);
+                        } else {
+                            if (step == 6) {
+                                Toast.makeText(getApplicationContext(), "Now Make A Move", Toast.LENGTH_SHORT).show();
+                                playerOneFirstTime = false;
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Better Luck Next Time", Toast.LENGTH_SHORT).show();
+                                playerOneTurn = false;
+                                playerOneDice.setVisibility(View.INVISIBLE);
+                                playerTwoDice.setVisibility(View.VISIBLE);
+                            }
+                        }
                         break;
+
                 }
-                return false;
+                return true;
             }
 
             Runnable mAction = new Runnable() {
@@ -88,25 +102,37 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        j=1;
+                        j = 1;
                         p2.setText(String.valueOf(j));
-                        mHandler2.postDelayed(mAction2,100);
+                        mHandler2.postDelayed(mAction2, 100);
                         break;
                     case MotionEvent.ACTION_UP:
                         mHandler2.removeCallbacks(mAction2);
                         step = Integer.parseInt(p2.getText().toString());
-                        calcPosition();
-                        if(step!=0)
-                            makemove();
-                        checkForWin();
-                        laps2.setText(String.valueOf(playerTwoLaps));
-                        playerOneTurn = true;
-                        playerOneDice.setVisibility(View.VISIBLE);
-                        playerTwoDice.setVisibility(View.INVISIBLE);
-                        j=1;
+                        if (!playerTwoFirstTime) {
+                            calcPosition();
+                            if (step != 0)
+                                makemove();
+                            checkForWin();
+                            laps2.setText(String.valueOf(playerTwoLaps));
+                            playerOneTurn = true;
+                            playerOneDice.setVisibility(View.VISIBLE);
+                            playerTwoDice.setVisibility(View.INVISIBLE);
+                        }
+                        else{
+                            if (step == 6) {
+                                Toast.makeText(getApplicationContext(), "Now Make A Move", Toast.LENGTH_SHORT).show();
+                                playerTwoFirstTime = false;
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Better Luck Next Time", Toast.LENGTH_SHORT).show();
+                                playerOneTurn = true;
+                                playerOneDice.setVisibility(View.VISIBLE);
+                                playerTwoDice.setVisibility(View.INVISIBLE);
+                            }
+                        }
                         break;
                 }
-                return false;
+                return true;
             }
 
             Runnable mAction2 = new Runnable() {
@@ -154,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     textViews[playerOnePrev].setText("");
                 if (playerOnePosition == playerTwoPosition) {
                     Toast.makeText(getApplicationContext(), "YOU JUST GOT REKT!!", Toast.LENGTH_SHORT).show();
+                    playerTwoFirstTime = true;
                     playerTwoPosition = 0;
                 }
                 textViews[playerOnePosition].setText("X");
@@ -161,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 textViews[playerOnePrev].setText("");
                 Toast.makeText(getApplicationContext(), "LAP COMPLETED", Toast.LENGTH_SHORT).show();
                 playerOneLaps++;
+                playerOneFirstTime = true;
                 playerOnePosition = 15;
             }
         } else {
@@ -169,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     textViews[playerTwoPrev].setText("");
                 if (playerTwoPosition == playerOnePosition) {
                     Toast.makeText(getApplicationContext(), "YOU JUST GOT REKT!!", Toast.LENGTH_SHORT).show();
+                    playerOneFirstTime = true;
                     playerOnePosition = 15;
                 }
                 textViews[playerTwoPosition].setText("O");
@@ -176,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 textViews[playerTwoPrev].setText("");
                 Toast.makeText(getApplicationContext(), "LAP COMPLETED", Toast.LENGTH_SHORT).show();
                 playerTwoLaps++;
+                playerTwoFirstTime = true;
                 playerTwoPosition = 0;
 
             }
