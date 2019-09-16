@@ -12,6 +12,30 @@
         android:layout_height="match_parent"
         android:layout_weight="2">
 
+        <RadioGroup
+            android:id="@+id/radioBtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/p2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:rotation="180">
+
+            <RadioButton
+                android:id="@+id/upBtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go UP" />
+
+            <RadioButton
+                android:id="@+id/downBtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go DOWN" />
+
+        </RadioGroup>
+
         <Button
             android:id="@+id/playerTwoDice"
             android:layout_width="120dp"
@@ -47,10 +71,10 @@
             android:id="@+id/title2"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_below="@id/p2"
+            android:layout_below="@id/laps2"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="196dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
@@ -62,15 +86,17 @@
 
         <TextView
             android:id="@+id/laps2"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_below="@id/p2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioBtn2"
+            android:text="0"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="57dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="37dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:rotation="180"
             android:textColor="#021AB8"
@@ -88,7 +114,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
@@ -322,11 +348,34 @@
         android:layout_alignParentTop="true"
         android:layout_weight="2">
 
+        <RadioGroup
+            android:id="@+id/radioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/laps1"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp">
+
+            <RadioButton
+                android:id="@+id/upBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go UP" />
+
+            <RadioButton
+                android:id="@+id/downBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go DOWN" />
+
+        </RadioGroup>
+
         <Button
             android:id="@+id/playerOneDice"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/p1"
             android:layout_margin="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
@@ -341,13 +390,14 @@
             android:id="@+id/p1"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_above="@+id/playerOneDice"
+            android:layout_below="@+id/radioBtn"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="28dp"
+            android:layout_marginHorizontal="20dp"
             android:background="#FFFFFF"
             android:gravity="center|center_horizontal|center_vertical"
             android:textColor="#000000"
@@ -355,11 +405,10 @@
 
         <TextView
             android:id="@+id/title1"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
@@ -370,16 +419,18 @@
 
         <TextView
             android:id="@+id/laps1"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/title1"
+            android:text="0"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:textColor="#B80202"
             android:textSize="40sp" />
     </RelativeLayout>

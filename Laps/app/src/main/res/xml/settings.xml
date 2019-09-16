@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:id="@+id/checkBox1"
+        android:key="bidirection"
+        android:title="BI-DIRECTIONAL"
+        android:defaultValue="false"
+        android:summary="Check this if you want to go both ways UP and DOWN"/>
+
+    <CheckBoxPreference
+        android:id="@+id/checkBox2"
+        android:key="startRandom"
+        android:title="RANDOM NUMBER"
+        android:defaultValue="false"
+        android:summary="Check this if you want to start with a random number"/>
+
+    <EditTextPreference
+        android:id="@+id/textBox"
+        android:key="numberOfLaps"
+        android:title="NUMBER OF LAPS"
+        android:defaultValue="3"/>
+
+</PreferenceScreen>
