@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap" rel="stylesheet">	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="script.js"></script>
+</head>
+<body>
+	<div class="container" id="main">
+	</div>
+	<div class="settings">
+		<br>
+		<div class="type">
+			<div class="button_box"><input type="radio" name="type" value="merge" id="one"><label for="one">MERGE SORT</label></div>
+			<div class="button_box"><input type="radio" name="type" value="quick" id="two"><label for="two">QUICK SORT</label></div>
+			<div class="button_box"><input type="radio" name="type" value="insertion" id="three"><label for="three">INSERTION SORT</label></div>
+			<div class="button_box"><input type="radio" name="type" value="selection" id="four"><label for="four">SLECTION SORT</label></div>
+			<div class="button_box"><input type="radio" name="type" value="bubble" id="five"><label for="five">BUBBLE SORT</label></div>
+		</div><br><br>
+		<div class="slidecontainer">
+			<input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+		</div><br>
+		<div class="submit">
+			<button class="button" onclick="start()">RUN</button>
+			<button class="button" onclick="reset()">RESET</button>
+		</div>
+
+	</div>
+</body>
+</html>
