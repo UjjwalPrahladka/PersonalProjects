@@ -265,7 +265,7 @@ window.addEventListener('load', (event) => {
 
     let slide = document.getElementById('myRange');
 
-	slide.onchange = function() {
+	slide.oninput = function() {
 	    init(this.value);
 	    time = Math.min(200 * 50 / this.value, 1000);
 	    let x = document.getElementsByClassName('bar');
